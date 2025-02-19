@@ -6,6 +6,7 @@ public class Player : MonoBehaviour
 {
     Animator animator = null;
     Rigidbody2D _rigidbody = null;
+    Transform playerTransform;
 
     public float jumpForce = 6f;
     public float forwardSpeed = 3f;
@@ -18,6 +19,14 @@ public class Player : MonoBehaviour
     {
         animator = transform.GetComponent<Animator>();
         _rigidbody = transform.GetComponent<Rigidbody2D>();
+        playerTransform = transform.GetComponent<Transform>();
+
+        
+        //Vector2 minY = transform.localPosition;
+        //minY.y = -1f;
+        //transform.localPosition = minY;
+
+
 
         if (animator == null)
         {
@@ -34,41 +43,49 @@ public class Player : MonoBehaviour
     {
         if (isDead)
         {
-            // 게임 재시작
-            return;  // temp
+            return; // temp
         }
         else
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                isJump = true;
+                Jump();
             }
         }
     }
 
-
-    public void FixedUpdate()
+    private void Jump()
     {
-        if (isDead) return;
-
-        Vector3 velocity = _rigidbody.velocity;
-        velocity.x = forwardSpeed;
-
-        if (isJump)
-        {
-            velocity.y += jumpForce;
-            velocity.y += jumpForce;
-            isJump = false;
-        }
-
-        _rigidbody.velocity = velocity;
+        _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
     }
+
+
+
+
+
+    //public void FixedUpdate()
+    //{
+    //    if (isDead) return;
+
+    //    Vector3 velocity = _rigidbody.velocity;
+    //    velocity.x = forwardSpeed;
+
+    //    if (isJump)
+    //    {
+    //        velocity.y += jumpForce;
+    //        isJump = false;
+    //    }
+
+    //    _rigidbody.velocity = velocity;
+    //}
 
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (isDead) return;
+
+        if (collision.gameObject.CompareTag("Ground")) return;
 
         animator.SetBool("IsDie", true);
         isDead = true;
