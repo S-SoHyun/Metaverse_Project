@@ -43,7 +43,10 @@ public class PlayerManager : MonoBehaviour
     private void Update()
     {
         PlayerInput();
-        Rotate(lookDirection);
+        Flip();
+        
+        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+            Pause();
     }
 
 
@@ -53,21 +56,30 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-    private void Rotate(Vector2 direction)
+    private void Flip()
     {
-        float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        bool isLeft = Mathf.Abs(rotZ) > 90f;
-
-        mainCharacterRenderer.flipX = isLeft;
-
-
-        // ¿şÆùÇÇ¹ş?
+        if (Input.GetAxisRaw("Horizontal") < 0f)
+        {
+            mainCharacterRenderer.flipX = true;
+        }
+        else
+        {
+            mainCharacterRenderer.flipX = false;
+        }
     }
 
     private void Move(Vector2 direction)
     {
-        direction = direction * 5;
+        direction = direction * 10;
         _rigidbody.velocity = direction;
+    }
+
+    private void Pause()        // ÇÃ·¹ÀÌ¾î µü ¸ØÃß°Ô. ±¸Çö ¾È µÆÀ½
+    {
+        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+        {
+            _rigidbody.velocity = Vector2.zero;
+        }
     }
 
 
@@ -75,16 +87,8 @@ public class PlayerManager : MonoBehaviour
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
+        
 
         moveDirection = new Vector2(horizontal, vertical).normalized;
-
-        Vector2 mousePosition = Input.mousePosition;
-        Vector2 worldPos = camera.ScreenToWorldPoint(mousePosition);
-
-        lookDirection = (worldPos - (Vector2)transform.position);
     }
-
-
-
-
 }
