@@ -10,4 +10,12 @@ public class SceneMoveManager : MonoBehaviour
         SceneManager.LoadScene("MainScene");
     }
 
+
+    private void OnCollisionEnter2D(Collision2D collision)  // 이거 되면 엔터미니게임 지우기
+    {
+        SceneManager.LoadScene("MiniGameScene");
+    }
+
+
+
 }

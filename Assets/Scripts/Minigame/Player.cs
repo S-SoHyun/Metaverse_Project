@@ -48,17 +48,14 @@ public class Player : MonoBehaviour
     {
         if (isDead)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                miniGameManager.Restart();
-            }
+            miniGameManager.GameOver();
         }
         else
         {
             if (Input.GetKeyDown(KeyCode.Space) && !isJump)
                 Jump();
-        }
     }
+}
 
     private void Jump()
     {
