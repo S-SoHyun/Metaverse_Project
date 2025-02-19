@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    MiniGameManager miniGameManager = null;
+
     Animator animator = null;
     Rigidbody2D _rigidbody = null;
     Transform playerTransform;
@@ -15,18 +18,20 @@ public class Player : MonoBehaviour
     bool isJump = false;
 
 
+    private void Awake()
+    {
+        isJump = false;
+    }
+
+
     private void Start()
     {
+        miniGameManager = MiniGameManager.Instance;
+        
+        
         animator = transform.GetComponent<Animator>();
         _rigidbody = transform.GetComponent<Rigidbody2D>();
         playerTransform = transform.GetComponent<Transform>();
-
-        
-        //Vector2 minY = transform.localPosition;
-        //minY.y = -1f;
-        //transform.localPosition = minY;
-
-
 
         if (animator == null)
         {
@@ -43,41 +48,44 @@ public class Player : MonoBehaviour
     {
         if (isDead)
         {
-            return; // temp
+            if (Input.GetMouseButtonDown(0))
+            {
+                miniGameManager.Restart();
+            }
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
+            if (Input.GetKeyDown(KeyCode.Space) && !isJump)
                 Jump();
-            }
         }
     }
 
     private void Jump()
     {
+        isJump = true;
         _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
+        isJump = false;
     }
 
 
 
 
 
-    //public void FixedUpdate()
-    //{
-    //    if (isDead) return;
+    public void FixedUpdate()
+    {
+        if (isDead) return;
 
-    //    Vector3 velocity = _rigidbody.velocity;
-    //    velocity.x = forwardSpeed;
+        Vector3 velocity = _rigidbody.velocity;
+        velocity.x = forwardSpeed;
 
-    //    if (isJump)
-    //    {
-    //        velocity.y += jumpForce;
-    //        isJump = false;
-    //    }
+        if (isJump)
+        {
+            velocity.y += jumpForce;
+            isJump = false;
+        }
 
-    //    _rigidbody.velocity = velocity;
-    //}
+        _rigidbody.velocity = velocity;
+    }
 
 
 
@@ -85,9 +93,14 @@ public class Player : MonoBehaviour
     {
         if (isDead) return;
 
-        if (collision.gameObject.CompareTag("Ground")) return;
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isJump = false;
+            return;
+        }
 
         animator.SetBool("IsDie", true);
         isDead = true;
+        miniGameManager.GameOver();
     }
 }
