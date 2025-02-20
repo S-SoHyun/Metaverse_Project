@@ -30,7 +30,7 @@ public class Obstacle : MonoBehaviour
     }
 
 
-    public void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         Player player = collision.GetComponent<Player>();
         if (player != null)

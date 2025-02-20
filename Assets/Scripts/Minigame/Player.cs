@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     Animator animator = null;
     Rigidbody2D _rigidbody = null;
-    Transform playerTransform;
+
 
     public float jumpForce = 6f;
     public float forwardSpeed = 3f;
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
         
         animator = transform.GetComponent<Animator>();
         _rigidbody = transform.GetComponent<Rigidbody2D>();
-        playerTransform = transform.GetComponent<Transform>();
+        
 
         if (animator == null)
         {
@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
 
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         if (isDead) return;
 

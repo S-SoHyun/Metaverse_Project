@@ -53,7 +53,6 @@ public class MiniGameManager : MonoBehaviour
     public void Restart()      // 게임 재시작
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
     }
 
 
