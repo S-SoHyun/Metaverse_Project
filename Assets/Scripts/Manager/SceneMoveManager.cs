@@ -10,4 +10,8 @@ public class SceneMoveManager : MonoBehaviour
         SceneManager.LoadScene("MainScene");
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        SceneManager.LoadScene("MinigameScene");
+    }
 }
