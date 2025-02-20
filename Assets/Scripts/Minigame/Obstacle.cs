@@ -6,7 +6,7 @@ public class Obstacle : MonoBehaviour
 {
     MiniGameManager miniGameManager;
 
-    public float hightPosY = 1f;
+    public float hightPosY = 3f;
     public float lowPosY = -0.73f;
     public Transform obstacle;
     public float widthPadding = 3f;
@@ -38,7 +38,4 @@ public class Obstacle : MonoBehaviour
             miniGameManager.AddScore(1);
         }
     }
-
-
-
 }

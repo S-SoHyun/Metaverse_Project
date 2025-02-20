@@ -21,7 +21,7 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private SpriteRenderer mainCharacterRenderer;
     
 
-    private Camera camera;
+    //private Camera camera;
 
 
     private void Awake()
@@ -33,8 +33,8 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        // 카메라
-        camera = Camera.main;
+        //// 카메라
+        //camera = Camera.main;
 
 
     }
