@@ -9,27 +9,40 @@ public class MiniGameManager : MonoBehaviour
     public static MiniGameManager Instance { get { return miniGameManager; } }
 
     UIManager uiManager;
-    public UIManager UIManager { get { return uiManager; } }
 
 
     private int currentScore = 0;
+    public int CurrentScore { get => currentScore; }
+
+    private int bestScore = 0;
+    public int BestScore { get => bestScore; }
+
+    private const string BestScoreKey = "BestScore";
+
+
+    
+
+
+
 
     private void Awake()
     {
         miniGameManager = this;
         uiManager = FindObjectOfType<UIManager>();
+
+        bestScore = PlayerPrefs.GetInt(BestScoreKey, 0);
     }
 
 
     private void Start()
     {
-        uiManager.UpdateScore(0);
+        GameStart();
     }
 
 
     void GameStart()        // 게임 시작
     {
-
+       SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
 
@@ -40,20 +53,28 @@ public class MiniGameManager : MonoBehaviour
     public void Restart()      // 게임 재시작
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
     }
 
 
 
     public void GameOver()     // 게임 오버
     {
-        // 최종 점수 UI창 뜨게 하기
-        // 유저가 EXIT 버튼을 클릭한다면 미니게임 할 수 있는 살룸창으로 돌아가기
-        // 유저가 Restart 버튼을 클릭한다면 다시 미니게임이 재시작하도록 하기
-
-
-        Debug.Log("게임 오버");
-        //Restart();
+       
+        
     }
+
+
+    void UpdateScore()
+    {
+        if (bestScore < currentScore)
+        {
+            bestScore = currentScore;
+        }
+
+        PlayerPrefs.SetInt(BestScoreKey, bestScore);
+    }
+
 
 
     public void AddScore(int score)
@@ -62,4 +83,23 @@ public class MiniGameManager : MonoBehaviour
         uiManager.UpdateScore(currentScore);
     }
 
+
+    // 버튼
+    public void OnClickStart()
+    {
+        miniGameManager.GameStart();
+    }
+
+
+    public void OnClickExit()
+    {
+        SceneMoveManager.Instance.MoveMainScene();
+    }
+
 }
+
+
+
+
+
+
