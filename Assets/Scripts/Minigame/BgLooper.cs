@@ -9,7 +9,7 @@ public class BgLooper : MonoBehaviour
     public Vector3 lastObstaclePos = Vector3.zero;
 
 
-    private void Start()
+    private void Start()        // 장애물 랜덤 세팅
     {
         Obstacle[] obstacles = GameObject.FindObjectsOfType<Obstacle>();
 
@@ -23,7 +23,7 @@ public class BgLooper : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)         // BgLooper와 닿았을 때 배경, 장애물이 뒤로 가도록 세팅
     {
         if (collision.CompareTag("Background") || collision.CompareTag("Ground"))
         {

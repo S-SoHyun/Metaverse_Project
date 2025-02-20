@@ -16,15 +16,8 @@ public class UIManager : MonoBehaviour
     }
 
 
-    public void UpdateScore(int score)
+    public void UpdateScore(int score)      // 점수UI에 점수 반영
     {
         scoreText.text = score.ToString();
     }
-
-
-
-
-
-
-
 }

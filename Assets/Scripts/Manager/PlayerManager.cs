@@ -5,9 +5,8 @@ using UnityEngine.UIElements;
 
 public class PlayerManager : MonoBehaviour
 {
-    // 싱글톤 만들어야 됨.  다른씬에도 있다하면 없애야 됨
-
-
+    static PlayerManager playerManager;
+    public static PlayerManager Instance { get { return playerManager; } }
 
 
     private Rigidbody2D _rigidbody;
@@ -21,11 +20,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private SpriteRenderer mainCharacterRenderer;
     
 
-    private Camera camera;
-
-
     private void Awake()
     {
+        playerManager = this;
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
@@ -33,9 +30,6 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        // 카메라
-        camera = Camera.main;
-
 
     }
 
@@ -45,8 +39,8 @@ public class PlayerManager : MonoBehaviour
         PlayerInput();
         Flip();
         
-        if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
-            Pause();
+        //if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
+        //    Pause();
     }
 
 
@@ -56,7 +50,7 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-    private void Flip()
+    private void Flip()     // 왼쪽 방향키 누르면 flip
     {
         if (Input.GetAxisRaw("Horizontal") < 0f)
         {
@@ -74,7 +68,7 @@ public class PlayerManager : MonoBehaviour
         _rigidbody.velocity = direction;
     }
 
-    private void Pause()        // 플레이어 딱 멈추게. 구현 안 됐음
+    private void Pause()        // 메인씬에서 플레이어 포지션이 -y가 됨. 구현 필요.
     {
         if (Input.GetAxisRaw("Horizontal") == 0 && Input.GetAxisRaw("Vertical") == 0)
         {
@@ -83,7 +77,7 @@ public class PlayerManager : MonoBehaviour
     }
 
 
-    private void PlayerInput()
+    private void PlayerInput()          // 메인씬에서 방향키로 이동
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");

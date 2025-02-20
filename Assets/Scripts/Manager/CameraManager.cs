@@ -5,6 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class CameraManager : MonoBehaviour
 {
+    // 메인씬은 Cinemachine으로 해결 → 코드로 구현해보는 것 필요
+    // 미니게임씬은 CameraManager로.
+    
+    
     public Transform target;
     float offsetX;
 

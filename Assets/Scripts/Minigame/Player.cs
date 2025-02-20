@@ -46,14 +46,14 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (isDead)
+        if (isDead)     // 죽었을 때
         {
             if (Input.GetMouseButtonDown(0))
             {
-                miniGameManager.Restart();
+                //miniGameManager.Restart();      // temp
             }
         }
-        else
+        else        // 스페이스를 눌렀고, 점프상태가 아니라면 점프
         {
             if (Input.GetKeyDown(KeyCode.Space) && !isJump)
                 Jump();
@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
         Vector3 velocity = _rigidbody.velocity;
         velocity.x = forwardSpeed;
 
-        if (isJump)
+        if (isJump)     // 점프상태일 때 점프 힘 받기
         {
             velocity.y += jumpForce;
             isJump = false;
@@ -89,11 +89,11 @@ public class Player : MonoBehaviour
 
 
 
-    public void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)       // obstacle과 충돌했을 때 죽기
     {
         if (isDead) return;
 
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground"))      // 땅은 충돌 제외
         {
             isJump = false;
             return;

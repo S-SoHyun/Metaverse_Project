@@ -16,13 +16,11 @@ public class Obstacle : MonoBehaviour
         miniGameManager = MiniGameManager.Instance;
     }
 
-
-    public Vector2 SetRandomPlace(Vector2 lastPosition, int obstacleCount)
+    
+    public Vector2 SetRandomPlace(Vector2 lastPosition, int obstacleCount)      // 장애물 랜덤세팅
     {
         obstacle.localPosition = new Vector2(0, lowPosY);
-        
         Vector2 placePosition = lastPosition + new Vector2(widthPadding, 0);
-        //placePosition.y = Random.Range(lowPosY, hightPosY);
 
         transform.position = placePosition;
 
@@ -30,7 +28,7 @@ public class Obstacle : MonoBehaviour
     }
 
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerExit2D(Collider2D collision)      // Obstacled의 box collider 영역 나갈 때 점수 추가. 구현 X
     {
         Player player = collision.GetComponent<Player>();
         if (player != null)
@@ -38,7 +36,4 @@ public class Obstacle : MonoBehaviour
             miniGameManager.AddScore(1);
         }
     }
-
-
-
 }

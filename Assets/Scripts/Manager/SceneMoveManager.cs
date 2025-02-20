@@ -15,12 +15,12 @@ public class SceneMoveManager : MonoBehaviour
     }
 
 
-    public void MoveMainScene()
+    public void MoveMainScene()         // 메인씬으로 이동
     {
         SceneManager.LoadScene("MainScene");
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)      // 살롱 문에 충돌하면 미니게임씬으로 이동
     {
         SceneManager.LoadScene("MinigameScene");
     }
